@@ -5,10 +5,10 @@ import ColorButton from './components/ColorButton';
 import ColorsWindow from './components/ColorsWindow';
 
 class OTColorInput extends React.Component {
-    ref = React.createRef();
-
     constructor(props) {
         super(props);
+
+        this.ref = React.createRef();
 
         this.state = {
             id: this.checkColor(this.props.value) ? this.checkColor(this.props.value) : 0,
@@ -70,7 +70,7 @@ class OTColorInput extends React.Component {
                     colorId={ this.state.id }
                     onClick={ this.toggleColorsWindow }
                     setRef={ this.ref }
-                    outerDivStyle={{ width: 40 }}
+                    outerDivStyle={{ width: '1.9em' }}
                 />
                 { this.state.isWindowOpen ?
                     <ColorsWindow

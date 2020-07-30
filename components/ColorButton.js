@@ -2,8 +2,8 @@ import React from 'react';
 import { COLORS } from './const';
 
 const outerDivStyle = {
-    width: 24,
-    height: 24,
+    width: '1.1em',
+    height: '1.1em',
     borderRadius: 5,
     borderStyle: 'solid',
     borderWidth: 1,
@@ -14,8 +14,8 @@ const outerDivStyle = {
 }
 
 const innerDivStyle = {
-    width: 'calc(100% - 6px)',
-    height: 'calc(100% - 6px)',
+    width: 'calc(100% - 0.15em)',
+    height: 'calc(100% - 0.15em)',
     borderRadius: 5,
     margin: 'auto'
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ROWS, COLUMNS } from './const';
+import { COLUMNS } from './const';
 
 import ColorPalette from './ColorPalette';
 
@@ -8,10 +8,10 @@ const windowStyle = {
 }
 
 class ColorsWindow extends React.Component {
-    ref = React.createRef();
-
     constructor(props) {
         super(props);
+
+        this.ref = React.createRef();
 
         this.handleClickOutside = this.handleClickOutside.bind(this);
 
