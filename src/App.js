@@ -22,12 +22,13 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            colorId: 55
+            colorId: 55,
+            hexColor: null
         }
     }
 
-    onChangeValue = (value) => {
-        this.setState({ colorId: value });
+    onChangeValue = (value, hexColor) => {
+        this.setState({ colorId: value, hexColor: hexColor });
     }
 
     render() {
@@ -44,7 +45,7 @@ class App extends React.Component {
                     />
 
                     <p>
-                        Color id: { this.state.colorId }
+                        Color id: { this.state.colorId } { this.state.hexColor !== null ? ' (' + this.state.hexColor + ')' : null }
                     </p>
                 </header>
             </div>
