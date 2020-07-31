@@ -3,6 +3,7 @@ import { MIN_COLOR, MAX_COLOR } from './components/const';
 
 import ColorButton from './components/ColorButton';
 import ColorsWindow from './components/ColorsWindow';
+import ColorsWindowMobile from './components/ColorsWindowMobile';
 
 class OTColorInput extends React.Component {
     constructor(props) {
@@ -10,10 +11,21 @@ class OTColorInput extends React.Component {
 
         this.ref = React.createRef();
 
+        this.deviceType = this.getDeviceType();
+        this.screenRotation = this.getScreenRotation();
+
         this.state = {
             id: this.checkColor(this.props.value) ? this.checkColor(this.props.value) : 0,
             isWindowOpen: false
         }
+    }
+
+    componentDidMount() {
+        window.addEventListener('resize', this.closeColorsWindow);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.closeColorsWindow);
     }
 
     checkColor = (color) => {
@@ -35,11 +47,18 @@ class OTColorInput extends React.Component {
     }
 
     toggleColorsWindow = () => {
-        this.setState({ isWindowOpen: !this.state.isWindowOpen });
+        if (this.state.isWindowOpen) {
+            this.closeColorsWindow();
+        } else {
+            this.openColorsWindow();
+        }
     }
 
     openColorsWindow = () => {
         if (!this.state.isWindowOpen) {
+            this.deviceType = this.getDeviceType();
+            this.screenRotation = this.getScreenRotation();
+
             this.setState({ isWindowOpen: true });
         }
     }
@@ -59,8 +78,12 @@ class OTColorInput extends React.Component {
         }
     }
 
-    isMobileDevice = () => {
-        return /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    getDeviceType = () => {
+        return /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'mobile' : 'desktop';
+    }
+
+    getScreenRotation = () => {
+        return window.innerWidth > window.innerHeight ? 'horizontal' : 'vertical';
     }
 
     render() {
@@ -73,6 +96,7 @@ class OTColorInput extends React.Component {
                     outerDivStyle={{ width: '1.9em' }}
                 />
                 { this.state.isWindowOpen ?
+                    this.deviceType === 'desktop' ?
                     <ColorsWindow
                         onChooseColor={ this.onChangeValue }
                         posX={ this.ref.current.offsetLeft }
@@ -81,7 +105,15 @@ class OTColorInput extends React.Component {
                         parentHeight={ this.ref.current.offsetHeight }
                         onClickOutside={ this.closeColorsWindow }
                         buttonRef={ this.ref }
+                        screenRotation={ this.screenRotation }
+                    />
+                    : this.deviceType === 'mobile' ?
+                    <ColorsWindowMobile
+                        onChooseColor={ this.onChangeValue }
+                        onClickOutside={ this.closeColorsWindow }
+                        screenRotation={ this.screenRotation }
                     /> : null
+                    : null
                 }
             </div>
         );

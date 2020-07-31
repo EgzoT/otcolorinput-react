@@ -32,14 +32,27 @@ class ColorPalette extends React.Component {
 
     render() {
         let rows = [];
-        for (let i = 0; i < ROWS; i++) {
-            let columns = [];
 
-            for (let j = 0; j < COLUMNS; j++) {
-                columns.push(<ColorPaletteColumn key={ i * 19 + j } colorId={ i * 19 + j } onChooseButton={ this.onChooseButton } outerDivStyle={{ width: 'calc(20em / ' + COLUMNS + ')', height: 'calc(20em / ' + COLUMNS + ')', maxWidth: 'calc(80vw / ' + COLUMNS + ' - ' + 2 + 'px)', maxHeight: 'calc(80vw / ' + COLUMNS + ' - ' + 2 + 'px)' }} />);
+        if (this.props.screenRotation === 'horizontal') {
+            for (let i = 0; i < ROWS; i++) {
+                let columns = [];
+
+                for (let j = 0; j < COLUMNS; j++) {
+                    columns.push(<ColorPaletteColumn key={ i * COLUMNS + j } colorId={ i * COLUMNS + j } onChooseButton={ this.onChooseButton } outerDivStyle={ this.props.colorButtonsStyle } />);
+                }
+
+                rows.push(<ColorPaletteRow key={ i }>{ columns }</ColorPaletteRow>);
             }
+        } else if (this.props.screenRotation === 'vertical') {
+            for (let i = 0; i < COLUMNS; i++) {
+                let columns = [];
 
-            rows.push(<ColorPaletteRow key={ i }>{ columns }</ColorPaletteRow>);
+                for (let j = 0; j < ROWS; j++) {
+                    columns.push(<ColorPaletteColumn key={ i * ROWS + j } colorId={ i + j * COLUMNS } onChooseButton={ this.onChooseButton } outerDivStyle={ this.props.colorButtonsStyle } />);
+                }
+
+                rows.push(<ColorPaletteRow key={ i }>{ columns }</ColorPaletteRow>);
+            }
         }
 
         return (

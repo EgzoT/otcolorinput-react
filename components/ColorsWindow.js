@@ -63,10 +63,23 @@ class ColorsWindow extends React.Component {
         }
     }
 
+    getColorButtonStyle = () => {
+        return {
+            width: 'calc(20em / ' + COLUMNS + ')',
+            height: 'calc(20em / ' + COLUMNS + ')',
+            maxWidth: 'calc(80vw / ' + COLUMNS + ' - ' + 2 + 'px)',
+            maxHeight: 'calc(80vw / ' + COLUMNS + ' - ' + 2 + 'px)'
+        }
+    }
+
     render() {
         return (
             <div ref={ this.ref } style={ this.prepareOuterDivStyle() }>
-                <ColorPalette onChooseColor={ this.props.onChooseColor } />
+                <ColorPalette
+                    onChooseColor={ this.props.onChooseColor }
+                    screenRotation={ 'horizontal' }
+                    colorButtonsStyle={ this.getColorButtonStyle() }
+                />
             </div>
         );
     }
