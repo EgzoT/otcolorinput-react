@@ -46,7 +46,7 @@ class ColorButton extends React.Component {
 
     onClick = () => {
         if (this.props.onClick) {
-            this.props.onClick(this.props.colorId);
+            this.props.onClick(this.props.colorId, COLORS[this.props.colorId]);
         }
     }
 

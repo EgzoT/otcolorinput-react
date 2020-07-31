@@ -50,12 +50,12 @@ class OTColorInput extends React.Component {
         }
     }
 
-    onChangeValue = (value) => {
+    onChangeValue = (value, hexColor) => {
         this.setState({ id: value });
         this.closeColorsWindow();
 
         if (this.props.onChange) {
-            this.props.onChange(value);
+            this.props.onChange(value, hexColor);
         }
     }
 

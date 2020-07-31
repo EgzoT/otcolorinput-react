@@ -24,9 +24,9 @@ class ColorPaletteColumn extends React.Component {
 }
 
 class ColorPalette extends React.Component {
-    onChooseButton = (id) => {
+    onChooseButton = (id, hexColor) => {
         if (this.props.onChooseColor) {
-            this.props.onChooseColor(id);
+            this.props.onChooseColor(id, hexColor);
         }
     }
 
