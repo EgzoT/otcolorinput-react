@@ -6,7 +6,7 @@ import ColorButton from './ColorButton';
 class ColorPaletteRow extends React.Component {
     render() {
         return (
-            <div style={{ display: 'table-row' }}>
+            <div style={{ ...{ display: 'table-row' }, ...this.props.style }}>
                 { this.props.children }
             </div>
         );
@@ -16,8 +16,13 @@ class ColorPaletteRow extends React.Component {
 class ColorPaletteColumn extends React.Component {
     render() {
         return (
-            <div style={{ display: 'table-cell' }}>
-                <ColorButton colorId={ this.props.colorId } onClick={ this.props.onChooseButton } outerDivStyle={ this.props.outerDivStyle } />
+            <div style={{ ...{ display: 'table-cell' }, ...this.props.style }}>
+                <ColorButton
+                    colorId={ this.props.colorId }
+                    onClick={ this.props.onChooseButton }
+                    outerDivStyle={{ ...this.props.size, ...this.props.buttonStyle['outer'] }}
+                    innerDivStyle={ this.props.buttonStyle['inner'] }
+                />
             </div>
         );
     }
@@ -30,6 +35,12 @@ class ColorPalette extends React.Component {
         }
     }
 
+    prepareStyle = () => {
+        let style = { ...{ display: 'table' }, ...this.props.style['container'] };
+
+        return style;
+    }
+
     render() {
         let rows = [];
 
@@ -38,25 +49,57 @@ class ColorPalette extends React.Component {
                 let columns = [];
 
                 for (let j = 0; j < COLUMNS; j++) {
-                    columns.push(<ColorPaletteColumn key={ i * COLUMNS + j } colorId={ i * COLUMNS + j } onChooseButton={ this.onChooseButton } outerDivStyle={ this.props.colorButtonsStyle } />);
+                    columns.push(
+                        <ColorPaletteColumn
+                            key={ i * COLUMNS + j }
+                            colorId={ i * COLUMNS + j }
+                            onChooseButton={ this.onChooseButton }
+                            size={ this.props.colorButtonsStyle }
+                            style={ this.props.style['column'] }
+                            buttonStyle={ this.props.style['button'] }
+                        />
+                    );
                 }
 
-                rows.push(<ColorPaletteRow key={ i }>{ columns }</ColorPaletteRow>);
+                rows.push(
+                    <ColorPaletteRow
+                        key={ i }
+                        style={ this.props.style['row'] }
+                    >
+                        { columns }
+                    </ColorPaletteRow>
+                );
             }
         } else if (this.props.screenRotation === 'vertical') {
             for (let i = 0; i < COLUMNS; i++) {
                 let columns = [];
 
                 for (let j = 0; j < ROWS; j++) {
-                    columns.push(<ColorPaletteColumn key={ i * ROWS + j } colorId={ i + j * COLUMNS } onChooseButton={ this.onChooseButton } outerDivStyle={ this.props.colorButtonsStyle } />);
+                    columns.push(
+                        <ColorPaletteColumn
+                            key={ i * ROWS + j }
+                            colorId={ i + j * COLUMNS }
+                            onChooseButton={ this.onChooseButton }
+                            size={ this.props.colorButtonsStyle }
+                            style={ this.props.style['column'] }
+                            buttonStyle={ this.props.style['button'] }
+                        />
+                    );
                 }
 
-                rows.push(<ColorPaletteRow key={ i }>{ columns }</ColorPaletteRow>);
+                rows.push(
+                    <ColorPaletteRow
+                        key={ i }
+                        style={ this.props.style['row'] }
+                    >
+                        { columns }
+                    </ColorPaletteRow>
+                );
             }
         }
 
         return (
-            <div style={{ display: 'table' }}>
+            <div style={ this.prepareStyle() }>
                 { rows }
             </div>
         );

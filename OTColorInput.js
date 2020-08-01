@@ -5,9 +5,46 @@ import ColorButton from './components/ColorButton';
 import ColorsWindow from './components/ColorsWindow';
 import ColorsWindowMobile from './components/ColorsWindowMobile';
 
+const styleTemplate = {
+    container: {},
+    button: {
+        outer: {},
+        inner: {}
+    },
+    window: {
+        container: {},
+        palette: {
+            container: {},
+            row: {},
+            column: {},
+            button: {
+                outer: {},
+                inner: {}
+            }
+        }
+    },
+    windowMobile: {
+        container: {
+            outer: {},
+            inner: {}
+        },
+        palette: {
+            container: {},
+            row: {},
+            column: {},
+            button: {
+                outer: {},
+                inner: {}
+            }
+        }
+    }
+}
+
 class OTColorInput extends React.Component {
     constructor(props) {
         super(props);
+
+        this.style = Object.assign(styleTemplate, this.props.style);
 
         this.ref = React.createRef();
 
@@ -88,12 +125,13 @@ class OTColorInput extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={ this.style['container'] }>
                 <ColorButton
                     colorId={ this.state.id }
                     onClick={ this.toggleColorsWindow }
                     setRef={ this.ref }
-                    outerDivStyle={{ width: '1.9em' }}
+                    outerDivStyle={{ ...{ width: '1.9em' }, ...this.style['button']['outer']}}
+                    innerDivStyle={ this.style['button']['inner'] }
                 />
                 { this.state.isWindowOpen ?
                     this.deviceType === 'desktop' ?
@@ -106,12 +144,16 @@ class OTColorInput extends React.Component {
                         onClickOutside={ this.closeColorsWindow }
                         buttonRef={ this.ref }
                         screenRotation={ this.screenRotation }
+                        style={ this.style['window']['container'] }
+                        stylePalette={ this.style['window']['palette'] }
                     />
                     : this.deviceType === 'mobile' ?
                     <ColorsWindowMobile
                         onChooseColor={ this.onChangeValue }
                         onClickOutside={ this.closeColorsWindow }
                         screenRotation={ this.screenRotation }
+                        style={ this.style['windowMobile']['container'] }
+                        stylePalette={ this.style['windowMobile']['palette'] }
                     /> : null
                     : null
                 }

@@ -79,6 +79,7 @@ class ColorsWindow extends React.Component {
                     onChooseColor={ this.props.onChooseColor }
                     screenRotation={ 'horizontal' }
                     colorButtonsStyle={ this.getColorButtonStyle() }
+                    style={ this.props.stylePalette }
                 />
             </div>
         );

@@ -40,9 +40,7 @@ class ColorsWindowMobile extends React.Component {
     }
 
     prepareOuterDivStyle = () => {
-        let style = windowStyle;
-
-        style = { ...style, ...this.props.style }
+        let style = { ...windowStyle, ...this.props.style['inner'] };
 
         return style;
     }
@@ -77,12 +75,13 @@ class ColorsWindowMobile extends React.Component {
 
     render() {
         return (
-            <div style={ backgroundStyle }>
+            <div style={{ ...backgroundStyle, ...this.props.style['outer'] }}>
                 <div ref={ this.ref } style={ this.prepareOuterDivStyle() }>
                     <ColorPalette
                         onChooseColor={ this.props.onChooseColor }
                         screenRotation={ this.props.screenRotation }
                         colorButtonsStyle={ this.getColorButtonStyle() }
+                        style={ this.props.stylePalette }
                     />
                 </div>
             </div>

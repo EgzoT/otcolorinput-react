@@ -38,8 +38,7 @@ class ColorButton extends React.Component {
     prepareInnerDivStyle = () => {
         let style = innerDivStyle;
 
-        style = { ...style, ...this.props.innerDivStyle }
-        style = { ...style, ...{ backgroundColor: COLORS[this.props.colorId] } }
+        style = { ...style, ...this.props.innerDivStyle, ...{ backgroundColor: COLORS[this.props.colorId] } }
 
         return style;
     }
