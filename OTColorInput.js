@@ -44,7 +44,7 @@ class OTColorInput extends React.Component {
     constructor(props) {
         super(props);
 
-        this.style = Object.assign(styleTemplate, this.props.style);
+        this.style = this.assignStyle(this.props.style);
 
         this.ref = React.createRef();
 
@@ -63,6 +63,13 @@ class OTColorInput extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.closeColorsWindow);
+    }
+
+    assignStyle = (newStyle) => {
+        let style = Object.assign({}, styleTemplate);
+        Object.assign(style, newStyle);
+
+        return style;
     }
 
     checkColor = (color) => {
